@@ -1,3 +1,7 @@
+#root {
+  font-family: 'Roboto';
+}
+
 .contenedor-principal {
   width: 100%;
   position: relative;
@@ -63,6 +67,22 @@
 
 .p-stepper-separator {
   margin-inline-start: calc(0.75rem + 2px);
+}
+
+// .p-tabview-nav-content 
+
+.p-tabview-nav-content ul {
+  margin-bottom: 0;
+  padding-left: 0;
+  justify-content: center;
+}
+
+.p-tabview-nav-content ul li {
+  justify-content: center;
+  width: 100%;
+}
+.p-tabview-nav-content ul li a {
+  justify-content: center;
 }
 
 .p-tabview-nav-container a {
