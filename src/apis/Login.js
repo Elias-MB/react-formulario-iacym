@@ -1,15 +1,13 @@
 import axios from "axios";
-import dataConfig from "../services/config.json";
+import { generalApi } from "./Index.js";
 
-const urlBack = dataConfig.BaseURLBack;
-
-const loginApi = axios.create({
-  baseURL: `${urlBack}/api/v1/login/`,
+const elementoApi = generalApi.create({
+  baseURL: `${generalApi.defaults.baseURL}login/`,
 });
 
 export const obtenerToken = async (body) => {
   try {
-    const respuesta = await loginApi.post("token/", body);
+    const respuesta = await elementoApi.post("token/", body);
     console.log(respuesta);
     return respuesta;
   } catch (error) {
@@ -23,7 +21,7 @@ export const obtenerToken = async (body) => {
 
 export const actualizarToken = async (body) => {
   try {
-    const respuesta = await loginApi.post("token/refresh/", body);
+    const respuesta = await elementoApi.post("token/refresh/", body);
     console.log(respuesta);
     return respuesta;
   } catch (error) {
