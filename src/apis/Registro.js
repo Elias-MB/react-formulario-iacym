@@ -49,7 +49,7 @@ export const actualizarRegistroApi = async (registro) => {
         await elementoApi.put(`${registro.id}/`, registro);
         response['tipo'] = 'info'
         response['titulo'] = 'Exitoso';
-        response['mensaje'] = `Registro ${registro.nombres} modificada`;
+        response['mensaje'] = `Registro ${registro.persona.nombres} modificada`;
         return response
     } catch (error) {
         console.error("Error al actualizar registro:", error);
@@ -67,7 +67,7 @@ export const eliminarRegistroApi = async (registro) => {
         await elementoApi.delete(`${registro.id}/`);
         response['tipo'] = 'success'
         response['titulo'] = 'Exitoso';
-        response['mensaje'] = `Registro ${registro.nombres} eliminado`;
+        response['mensaje'] = `Registro ${registro.persona.nombres} eliminado`;
         return response
     } catch (error) {
         console.error("Error al eliminar registro:", error);
