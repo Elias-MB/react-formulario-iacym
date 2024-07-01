@@ -1,7 +1,8 @@
 import axios from "axios";
 import dataConfig from './../services/config.json';
 
-const urlBack = dataConfig.BaseURLBack
+// const urlBack = dataConfig.BaseURLBack;
+const urlBack = import.meta.env.VITE_API;
 
 // export const ApiSeguraToken = axios.create({
 //     baseURL: `${urlBack}/api/v1/`,
