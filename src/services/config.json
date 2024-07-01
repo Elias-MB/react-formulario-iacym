@@ -1,4 +1,4 @@
 {
     "BaseURLSeguridad":"http://127.0.0.1:5050/seguridad",
-    "BaseURLBack":"http://127.0.0.1:8000"
+    "BaseURLBack":"https://django-formulario-iacym-production.up.railway.app"
 }
