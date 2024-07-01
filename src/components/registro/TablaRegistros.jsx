@@ -38,6 +38,7 @@ export function TablaRegistros({ elementos, onRecargar, activarNotificacion }) {
     expectativas: "",
   };
   const navigate = useNavigate();
+  const [expandedRows, setExpandedRows] = useState(null);
   const [date, setDate] = useState(new Date());
   const [elemento_dialogo, setElementoDialog] = useState(false);
   const [dialogo_eliminar_elemento, setDeleteElementoDialog] = useState(false);
@@ -260,7 +261,7 @@ export function TablaRegistros({ elementos, onRecargar, activarNotificacion }) {
           celular: item.persona.celular,
           edad: item.persona.edad,
           curso: item.curso.nombre,
-          ministerio: item.ministerio.nombre,
+          ministerio: item.ministerio.nombre
         }));
 
         const exportColumns = [
@@ -270,11 +271,11 @@ export function TablaRegistros({ elementos, onRecargar, activarNotificacion }) {
           { title: "Celular", dataKey: "celular" },
           { title: "Edad", dataKey: "edad" },
           { title: "Curso", dataKey: "curso" },
-          { title: "Ministerio", dataKey: "curso" },
+          { title: "Ministerio", dataKey: "ministerio" },
         ];
 
         doc.autoTable(exportColumns, dataToExport);
-        doc.save("Registros.pdf");
+        doc.save("Registros_Academia_Biblica.pdf");
       });
     });
   };
@@ -387,6 +388,7 @@ export function TablaRegistros({ elementos, onRecargar, activarNotificacion }) {
             outlined
             className="rounded"
             onClick={() => editarElemento(rowData)}
+            disabled
           />
           <Button
             icon="pi pi-trash"
@@ -400,9 +402,31 @@ export function TablaRegistros({ elementos, onRecargar, activarNotificacion }) {
     );
   };
 
+  const expandAll = () => {
+    let _expandedRows = {};
+
+    elementos.forEach((p) => (_expandedRows[`${p.id}`] = true));
+    setExpandedRows(_expandedRows);
+  };
+
+  const collapseAll = () => {
+    setExpandedRows(null);
+  };
+
+  const allowExpansion = (rowData) => {
+    if (rowData.persona) return true;
+  };
+
   const header = (
     <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
       <h4 className="m-0">Registros</h4>
+      <Button icon="pi pi-plus" label="Expand All" onClick={expandAll} text />
+      <Button
+        icon="pi pi-minus"
+        label="Collapse All"
+        onClick={collapseAll}
+        text
+      />
       <IconField iconPosition="left">
         <InputIcon className="pi pi-search" />
         <InputText
@@ -413,6 +437,7 @@ export function TablaRegistros({ elementos, onRecargar, activarNotificacion }) {
       </IconField>
     </div>
   );
+
   const elemento_dialogo_footer = (
     <React.Fragment>
       <div className="d-flex justify-content-end align-items-center gap-3 mt-3">
@@ -473,6 +498,26 @@ export function TablaRegistros({ elementos, onRecargar, activarNotificacion }) {
     </React.Fragment>
   );
 
+  const rowExpansionTemplate = (data) => {
+    console.log(data);
+    const valores = [data.persona]
+    const documentoTemplate = (rowData) => {
+      return <>{rowData.tipo_documento.nombre} {rowData.documento}</>;
+  };
+    return (
+      <div className="p-3">
+        <h6>Detalle de {data.persona.nombres}</h6>
+        <DataTable value={valores}>
+          <Column field="email" header="Email"></Column>
+          <Column field="documento" header="Documento" body={documentoTemplate}></Column>
+          <Column field="fecha_nacimiento" header="Fecha Nacimiento"></Column>
+          <Column field="edad" header="Edad"></Column>
+          <Column field="fecha_bautismo" header="Fecha Bautismo"></Column>
+        </DataTable>
+      </div>
+    );
+  };
+
   return (
     <div className="mt-5 pt-4">
       <div className="card">
@@ -498,8 +543,12 @@ export function TablaRegistros({ elementos, onRecargar, activarNotificacion }) {
           sortField="id"
           sortOrder={-1}
           emptyMessage="No se encontrados datos"
+          expandedRows={expandedRows}
+          onRowToggle={(e) => setExpandedRows(e.data)}
+          rowExpansionTemplate={rowExpansionTemplate}
         >
           <Column selectionMode="multiple" exportable={false}></Column>
+          <Column expander={allowExpansion} />
           <Column
             field="id"
             header="id"
@@ -750,7 +799,7 @@ export function TablaRegistros({ elementos, onRecargar, activarNotificacion }) {
             className="pi pi-exclamation-triangle mr-3"
             style={{ fontSize: "2rem" }}
           />
-          {elemento.persona &&  (
+          {elemento.persona && (
             <span>
               ¿ Estás seguro de eliminar a <b>{elemento.persona.nombres}</b>?
             </span>

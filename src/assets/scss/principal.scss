@@ -304,3 +304,10 @@ $color-sombra: rgba(1, 0, 51, 0.2);
 .value svg {
   width: 15px;
 }
+
+.p-datatable .p-datatable-tbody > tr > td {
+  text-align: left;
+  border: 1px solid #dfe7ef;
+  border-width: 0 0 1px 0;
+  padding: 0.8rem 0.8rem;
+}

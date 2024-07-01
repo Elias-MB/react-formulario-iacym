@@ -13,7 +13,7 @@ export const obtenerRegistrosApi = async () => {
     try {
         const respuesta = await elementoApi.get('/');
         const elementos = respuesta.data;
-        console.log(elementos);
+        // console.log(elementos);
         return elementos
     } catch (error) {
         console.error("Error al obtener registros:", error);
@@ -28,7 +28,7 @@ export const obtenerRegistrosApi = async () => {
 export const crearRegistroApi = async (registro) => {
     let response = {}
     try {
-      console.log("Registro creado", registro);
+    //   console.log("Registro creado", registro);
         await elementoApi.post('/', registro);
         response['tipo'] = 'success'
         response['titulo'] = 'Exitoso';
