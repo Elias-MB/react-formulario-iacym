@@ -206,7 +206,26 @@ export const Registrar = () => {
           <TabView>
             {cursos.map((curso, index) => (
               <TabPanel key={index} header={curso.nombre}>
+                <div className="container-fluid p-0">
                 <p className="m-0">{curso.desc}</p>
+                <div className="row">
+                  <div className="col-6">
+                    <div>Inicia</div>
+                    <div><b>{curso.fecha_inicio}</b></div>
+                  </div>
+                  <div className="col-6">
+                    <div>Costo</div>
+                    <div><b>
+                      {
+                        curso.costo == 0.00 ? (
+                          <>Gratis</>
+                        ) : (
+                          <>S/ {curso.costo}</>
+                        )
+                      }</b></div>
+                  </div>
+                </div>
+                </div>
               </TabPanel>
             ))}
           </TabView>
@@ -355,7 +374,7 @@ export const Registrar = () => {
                 <InputText
                   id="documento"
                   onChange={(e) => onInputChange(e, "documento")}
-                  maxLength={8}
+                  maxLength={elemento.tipo_documento && elemento.tipo_documento.nombre == "DNI" ? 8:9}
                 />
               </div>
             </div>

@@ -4,11 +4,14 @@ import "../assets/scss/login.scss";
 
 import { AuthContext } from "../context/AuthProviderContext.jsx";
 import { obtenerToken } from "../apis/Login.js";
+import { useNotification } from "../context/NotificationContext";
 
 export function Login() {
   const navigate = useNavigate();
 
   const { login } = useContext(AuthContext);
+  const { activarNotificacion } = useNotification();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -21,7 +24,9 @@ export function Login() {
         username: username,
         password: password,
       });
+      
       const token = response.data.access;
+
       login(username, token);
       // localStorage.setItem("token", token);
 
@@ -34,13 +39,23 @@ export function Login() {
         navigate("/registros");
       }
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        setErrorMessage("Usuario o contraseña incorrectos");
-      } else {
-        setErrorMessage(
-          "Error al iniciar sesión. Por favor, inténtelo de nuevo."
-        );
+      let mensaje;
+      let data = {
+        tipo: 'error',
+        titulo: 'Error',
       }
+      if (error.response && error.response.status === 401) {
+        mensaje = "Usuario o contraseña incorrectos"
+      } else if (error.response && error.response.status === 500) {
+        mensaje = "Error al conectarse a la base de datos, inténtelo en unos minutos."
+      } else {
+        mensaje = "Fallo inesperado, vuelva a intentarlo en unos minutos."
+        if (error.code && error.code == 'ERR_NETWORK') {
+          mensaje = 'Error de conexión. ' + mensaje
+        }
+      }
+      setErrorMessage(mensaje);
+      activarNotificacion({...data, mensaje: `${mensaje}.`})
     }
   };
 

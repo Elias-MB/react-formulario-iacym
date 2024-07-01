@@ -24,12 +24,12 @@ export const Principal = () => {
       <div className="container-fluid p-0 text-center text-black mt-5 pt-5">
         <div className="p-2 py-5 my-2">
           <h2 className="text-secondary">Bienvenido</h2>
-          <h1 className="text-primary">¿ Qué desea hacer ?</h1>
+          <h1 className="text-primary">¿ Qué deseas hacer ?</h1>
         </div>
         <div className="row justify-content-center">
           <div className="row col-lg-8 col-xl-6">
             <div className="rounded container-fluid p-3 col-md-6">
-            <Button style={{height: "100px", fontSize: "23px"}} label="REGISTRARME A UN CURSO BÍBLICO" className="p-button text-white font-bold w-100 p-3 rounded" onClick={() =>  window.open('/registrar', '_blank')}/>
+            <Button style={{height: "100px", fontSize: "23px"}} label="REGISTRARME EN UN CURSO BÍBLICO" className="p-button text-white font-bold w-100 p-3 rounded" onClick={() =>  window.open('/registrar', '_blank')}/>
             </div>
             <div className="rounded container-fluid p-3 col-md-6">
             <Button style={{height: "100px", fontSize: "23px"}} label="VER TODOS LOS REGISTROS" severity="info" className="p-button text-white font-bold w-100 p-3 rounded" onClick={() =>  window.open('/admin/registros', '_blank')}/>

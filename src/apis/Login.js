@@ -6,15 +6,18 @@ const elementoApi = generalApi.create({
 });
 
 export const obtenerToken = async (body) => {
+  let response = {}
   try {
     const respuesta = await elementoApi.post("token/", body);
-    console.log(respuesta);
     return respuesta;
   } catch (error) {
+    console.log(error);
     if (error.response && error.response.status === 401) {
       throw error;
+    } else if (error.response && error.response.status === 500) {
+      throw error;
     } else {
-      return;
+      throw error;
     }
   }
 };
