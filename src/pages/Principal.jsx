@@ -26,7 +26,7 @@ export const Principal = () => {
           <h2 className="text-secondary">Bienvenido</h2>
           <h1 className="text-primary">¿ Qué deseas hacer ?</h1>
         </div>
-        <div className="row justify-content-center">
+        <div className="row justify-content-center m-0">
           <div className="row col-lg-8 col-xl-6">
             <div className="rounded container-fluid p-3 col-md-6">
             <Button style={{height: "100px", fontSize: "23px"}} label="REGISTRARME EN UN CURSO BÍBLICO" className="p-button text-white font-bold w-100 p-3 rounded" onClick={() =>  window.open('/registrar', '_blank')}/>
