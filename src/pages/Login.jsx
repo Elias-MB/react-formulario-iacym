@@ -36,7 +36,7 @@ export function Login() {
       if (redirectUrl) {
         navigate(redirectUrl);
       } else {
-        navigate("/registros");
+        navigate("/admin/registros");
       }
     } catch (error) {
       let mensaje;
