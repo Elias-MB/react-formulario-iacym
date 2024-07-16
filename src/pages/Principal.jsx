@@ -36,6 +36,16 @@ export const Principal = () => {
             </div>
           </div>
         </div>
+        <div className="row justify-content-center m-0">
+          <div className="row col-lg-8 col-xl-6">
+            <div className="rounded container-fluid p-3 col-md-6">
+            <Button style={{height: "100px", fontSize: "23px"}} label="REGISTRARME AL EVENTO DE PAREJAS" className="p-button text-white font-bold w-100 p-3 rounded" onClick={() =>  window.open('/registrar/parejas', '_blank')}/>
+            </div>
+            <div className="rounded container-fluid p-3 col-md-6">
+            <Button style={{height: "100px", fontSize: "23px"}} label="VER REGISTROS DEL EVENTO DE PAREJAS" severity="info" className="p-button text-white font-bold w-100 p-3 rounded" onClick={() =>  window.open('/admin/registros/parejas', '_blank')}/>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ export const ConfirmDialogProvider = ({ children }) => {
       accept: () => {
         options.accept();
         if (options.toastOnAccept) {
-          activarNotificacion({ tipo: 'info', titulo: 'Confirmado', mensaje: `${elemento.nombres}, haz enviado tu solicitud de registro a ${elemento.curso.nombre} exitosamente.` });
+          activarNotificacion({ tipo: 'info', titulo: 'Confirmado', mensaje: `${elemento.idoneo.nombres} y ${elemento.idonea.nombres}, han enviado su solicitud de registro exitosamente.` });
         }
       },
       reject: () => {
@@ -28,7 +28,7 @@ export const ConfirmDialogProvider = ({ children }) => {
           options.reject();
         }
         if (options.toastOnReject) {
-          activarNotificacion({ tipo: 'warn', titulo: 'Rechazado', mensaje: `${elemento.nombres}, haz cancelado tu registro al curso ${elemento.curso.nombre}` });
+          activarNotificacion({ tipo: 'warn', titulo: 'Rechazado', mensaje: `${elemento.idoneo.nombres} y ${elemento.idonea.nombres}, han cancelado su registro` });
         }
       },
       
