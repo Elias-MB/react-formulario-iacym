@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Calendar } from "primereact/calendar";
@@ -8,6 +8,7 @@ import { useConfirmDialog } from "../context/ConfirmDialogContext.jsx";
 import { useNotification } from "../context/NotificationContext.jsx";
 
 import { crearRegistroParejaApi } from "../apis/RegistroPareja.js";
+import { obtenerRegistrosWspApi } from "../apis/Wsp.js";
 
 export const RegistrarParejas = () => {
   const elementoEmpty = {
@@ -17,7 +18,7 @@ export const RegistrarParejas = () => {
       apellido_materno: "",
       fecha_nacimiento: "",
       celular: "",
-      estado: "A"
+      estado: "A",
     },
     idonea: {
       nombres: "",
@@ -25,7 +26,7 @@ export const RegistrarParejas = () => {
       apellido_materno: "",
       fecha_nacimiento: "",
       celular: "",
-      estado: "A"
+      estado: "A",
     },
     expectativas: "",
   };
@@ -33,6 +34,7 @@ export const RegistrarParejas = () => {
   const { showConfirmDialog } = useConfirmDialog();
   const { activarNotificacion } = useNotification();
   const [loading, setLoading] = useState(false);
+  const [registros_wsp, setRegistrosWsp] = useState(null);
   const fecha_maxima_nacimiento = new Date(2005, 0, 1);
 
   const [elemento, setElemento] = useState(elementoEmpty);
@@ -43,9 +45,25 @@ export const RegistrarParejas = () => {
       ...prevState,
       [sujeto]: {
         ...prevState[sujeto],
-        [name]: val
-      }
+        [name]: val,
+      },
     }));
+  };
+
+  const redirigirWsp = async () => {
+    let url;
+
+    registros_wsp.forEach(reg => {
+      if (reg.palabra_clave == "parejas") {
+        url = reg.url;
+      }
+    });
+
+    if (url) {
+      window.open(url, "_blank");
+    } else {
+      console.error("URL de WhatsApp no definida en las variables de entorno.");
+    }
   };
 
   const crearRegistro = async (elemento) => {
@@ -58,7 +76,7 @@ export const RegistrarParejas = () => {
           apellido_materno: elemento.idoneo.apellido_materno,
           fecha_nacimiento: elemento.idoneo.fecha_nacimiento,
           celular: elemento.idoneo.celular,
-          estado: "A"
+          estado: "A",
         },
         idonea: {
           nombres: elemento.idonea.nombres,
@@ -66,17 +84,16 @@ export const RegistrarParejas = () => {
           apellido_materno: elemento.idonea.apellido_materno,
           fecha_nacimiento: elemento.idonea.fecha_nacimiento,
           celular: elemento.idonea.celular,
-          estado: "A"
+          estado: "A",
         },
         expectativas: elemento.expectativas,
       };
-      console.log(dataPost);
       const respuesta = await crearRegistroParejaApi(dataPost);
       setLoading(false);
       activarNotificacion(respuesta);
-      // if (respuesta.tipo == "success") {
-      //   setElemento(elementoEmpty);
-      // }
+      if (respuesta.tipo == "success") {
+        redirigirWsp();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -135,6 +152,15 @@ export const RegistrarParejas = () => {
     });
   };
 
+  useEffect(() => {
+    const obtenerRegistrosWsp = async () => {
+      const reg_wsp = await obtenerRegistrosWspApi();
+      setRegistrosWsp(reg_wsp)
+    }
+    obtenerRegistrosWsp();
+  }, [])
+  
+
   return (
     <div className="contenedor-principal">
       <img src="/images/fondo_1.jpg" alt="" className="img-fluid fondo-img" />
@@ -156,17 +182,25 @@ export const RegistrarParejas = () => {
               </div>
               <div className="row">
                 <div className="d-flex flex-column gap-2 col-sm-6 mb-3">
-                  <label htmlFor="idoneo_apellido_paterno">Apellido Paterno *</label>
+                  <label htmlFor="idoneo_apellido_paterno">
+                    Apellido Paterno *
+                  </label>
                   <InputText
                     id="idoneo_apellido_paterno"
-                    onChange={(e) => onInputChange(e, "idoneo", "apellido_paterno")}
+                    onChange={(e) =>
+                      onInputChange(e, "idoneo", "apellido_paterno")
+                    }
                   />
                 </div>
                 <div className="d-flex flex-column gap-2 col-sm-6 mb-3">
-                  <label htmlFor="idoneo_apellido_materno">Apellido Materno *</label>
+                  <label htmlFor="idoneo_apellido_materno">
+                    Apellido Materno *
+                  </label>
                   <InputText
                     id="idoneo_apellido_materno"
-                    onChange={(e) => onInputChange(e, "idoneo", "apellido_materno")}
+                    onChange={(e) =>
+                      onInputChange(e, "idoneo", "apellido_materno")
+                    }
                   />
                 </div>
               </div>
@@ -180,11 +214,15 @@ export const RegistrarParejas = () => {
                   />
                 </div>
                 <div className="d-flex flex-column gap-2 col-sm-6 mb-3">
-                  <label htmlFor="idoneo_fecha_nacimiento">Fecha Nacimiento *</label>
+                  <label htmlFor="idoneo_fecha_nacimiento">
+                    Fecha Nacimiento *
+                  </label>
                   <Calendar
                     id="idoneo_fecha_nacimiento"
                     value={elemento.idoneo.fecha_nacimiento}
-                    onChange={(e) => onInputChange(e, "idoneo", "fecha_nacimiento")}
+                    onChange={(e) =>
+                      onInputChange(e, "idoneo", "fecha_nacimiento")
+                    }
                     showIcon
                     dateFormat="dd/mm/yy"
                     maxDate={fecha_maxima_nacimiento}
@@ -205,17 +243,25 @@ export const RegistrarParejas = () => {
               </div>
               <div className="row">
                 <div className="d-flex flex-column gap-2 col-sm-6 mb-3">
-                  <label htmlFor="idonea_apellido_paterno">Apellido Paterno *</label>
+                  <label htmlFor="idonea_apellido_paterno">
+                    Apellido Paterno *
+                  </label>
                   <InputText
                     id="idonea_apellido_paterno"
-                    onChange={(e) => onInputChange(e, "idonea", "apellido_paterno")}
+                    onChange={(e) =>
+                      onInputChange(e, "idonea", "apellido_paterno")
+                    }
                   />
                 </div>
                 <div className="d-flex flex-column gap-2 col-sm-6 mb-3">
-                  <label htmlFor="idonea_apellido_materno">Apellido Materno *</label>
+                  <label htmlFor="idonea_apellido_materno">
+                    Apellido Materno *
+                  </label>
                   <InputText
                     id="idonea_apellido_materno"
-                    onChange={(e) => onInputChange(e, "idonea", "apellido_materno")}
+                    onChange={(e) =>
+                      onInputChange(e, "idonea", "apellido_materno")
+                    }
                   />
                 </div>
               </div>
@@ -229,11 +275,15 @@ export const RegistrarParejas = () => {
                   />
                 </div>
                 <div className="d-flex flex-column gap-2 col-sm-6 mb-3">
-                  <label htmlFor="idonea_fecha_nacimiento">Fecha Nacimiento *</label>
+                  <label htmlFor="idonea_fecha_nacimiento">
+                    Fecha Nacimiento *
+                  </label>
                   <Calendar
                     id="idonea_fecha_nacimiento"
                     value={elemento.idonea.fecha_nacimiento}
-                    onChange={(e) => onInputChange(e, "idonea", "fecha_nacimiento")}
+                    onChange={(e) =>
+                      onInputChange(e, "idonea", "fecha_nacimiento")
+                    }
                     showIcon
                     dateFormat="dd/mm/yy"
                     maxDate={fecha_maxima_nacimiento}
