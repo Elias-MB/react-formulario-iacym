@@ -12,6 +12,11 @@ export const Principal = () => {
   const { setTituloHeader } = useHeaderTitle();
   const { activarNotificacion } = useNotification();
 
+  const redireccionar = (urlToSave) => {
+    localStorage.setItem("redirectAfterLogin", urlToSave);
+    window.location.href = urlToSave;
+  }
+
   return (
     <div className="container-fluid p-0">
       <img src="/images/fondo_2.jpg" alt="" className="img-fluid fondo-img" />
@@ -29,20 +34,42 @@ export const Principal = () => {
         <div className="row justify-content-center m-0">
           <div className="row col-lg-8 col-xl-6">
             <div className="rounded container-fluid p-3 col-md-6">
-            <Button style={{height: "100px", fontSize: "23px"}} label="REGISTRARME EN UN CURSO BÍBLICO" className="p-button text-white font-bold w-100 p-3 rounded" onClick={() =>  window.open('/registrar', '_blank')}/>
+              <Button 
+                style={{height: "100px", fontSize: "23px"}} 
+                label="REGISTRARME EN UN CURSO BÍBLICO" 
+                className="p-button text-white font-bold w-100 p-3 rounded" 
+                onClick={() => redireccionar('/registrar')} 
+              />
             </div>
             <div className="rounded container-fluid p-3 col-md-6">
-            <Button style={{height: "100px", fontSize: "23px"}} label="VER TODOS LOS REGISTROS" severity="info" className="p-button text-white font-bold w-100 p-3 rounded" onClick={() =>  window.open('/admin/registros', '_blank')}/>
+              <Button 
+                style={{height: "100px", fontSize: "23px"}} 
+                label="VER TODOS LOS REGISTROS" 
+                severity="info" 
+                className="p-button text-white font-bold w-100 p-3 rounded" 
+                onClick={() => redireccionar('/admin/registros')} 
+              />
             </div>
           </div>
         </div>
         <div className="row justify-content-center m-0">
           <div className="row col-lg-8 col-xl-6">
             <div className="rounded container-fluid p-3 col-md-6">
-            <Button style={{height: "100px", fontSize: "23px"}} label="REGISTRARME AL EVENTO DE PAREJAS" className="p-button text-white font-bold w-100 p-3 rounded" onClick={() =>  window.open('/registrar/parejas', '_blank')}/>
+              <Button 
+                style={{height: "100px", fontSize: "23px"}} 
+                label="REGISTRARME AL EVENTO DE PAREJAS" 
+                className="p-button text-white font-bold w-100 p-3 rounded" 
+                onClick={() => redireccionar('/registrar/parejas')} 
+              />
             </div>
             <div className="rounded container-fluid p-3 col-md-6">
-            <Button style={{height: "100px", fontSize: "23px"}} label="VER REGISTROS DEL EVENTO DE PAREJAS" severity="info" className="p-button text-white font-bold w-100 p-3 rounded" onClick={() =>  window.open('/admin/registros/parejas', '_blank')}/>
+              <Button 
+                style={{height: "100px", fontSize: "23px"}} 
+                label="VER REGISTROS DEL EVENTO DE PAREJAS" 
+                severity="info" 
+                className="p-button text-white font-bold w-100 p-3 rounded" 
+                onClick={() => redireccionar('/admin/registros/parejas')} 
+              />
             </div>
           </div>
         </div>

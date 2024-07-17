@@ -31,13 +31,16 @@ export function Login() {
       // localStorage.setItem("token", token);
 
       const redirectUrl = localStorage.getItem("redirectAfterLogin");
-      localStorage.removeItem("redirectAfterLogin");
-
+      
+      console.log(redirectUrl);
+      
       if (redirectUrl) {
         navigate(redirectUrl);
       } else {
-        navigate("/admin/registros");
+        navigate("/admin/registros/parejas");
       }
+      localStorage.removeItem("redirectAfterLogin");
+      
     } catch (error) {
       let mensaje;
       let data = {
