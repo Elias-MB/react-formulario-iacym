@@ -41,13 +41,20 @@ export const RegistrarParejas = () => {
 
   const onInputChange = (e, sujeto, name) => {
     const val = (e.target && e.target.value) || "";
-    setElemento((prevState) => ({
-      ...prevState,
-      [sujeto]: {
-        ...prevState[sujeto],
-        [name]: val,
-      },
-    }));
+    if (sujeto!="") {
+      setElemento((prevState) => ({
+        ...prevState,
+        [sujeto]: {
+          ...prevState[sujeto],
+          [name]: val,
+        },
+      }));
+    } else {
+      setElemento((prevState) => ({
+        ...prevState,
+        [name]: val
+      }));
+    }
   };
 
   const redirigirWsp = async () => {
@@ -165,7 +172,14 @@ export const RegistrarParejas = () => {
     <div className="contenedor-principal">
       <img src="/images/fondo_1.jpg" alt="" className="img-fluid fondo-img" />
       <div className="formulario container-sm">
-        <h1 className="pb-3">Mistura Romántico</h1>
+        <div className="card bg-none border-none text-light">
+          <div className="card-body text-center">
+            <h1 className="card-title">Mistura Romántico</h1>
+            <p className="card-text"><i className="pi pi-calendar-clock me-2"></i>28 de julio | 4:30 p.m.</p>
+            <p className="card-text"><i className="pi pi-map-marker me-2"></i>Alianza Manchay</p>
+          </div>
+        </div>
+        
         <form
           className="d-flex flex-column justify-content-center text-start p-1"
           onSubmit={handleConfirmSubmit}
@@ -299,7 +313,7 @@ export const RegistrarParejas = () => {
               autoResize
               style={{ minHeight: "50px" }}
               value={elemento.expectativas}
-              onChange={(e) => onInputChange(e, "expectativas")}
+              onChange={(e) => onInputChange(e, "", "expectativas")}
               rows={4}
               cols={30}
             />
