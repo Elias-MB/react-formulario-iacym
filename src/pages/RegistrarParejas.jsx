@@ -312,7 +312,7 @@ export const RegistrarParejas = () => {
           </div>
 
           <div className="d-flex flex-column gap-2 w-100 mb-3">
-            <label htmlFor="expectativas">Expectativas del curso</label>
+            <label htmlFor="expectativas">Expectativas de la reunión</label>
             <InputTextarea
               autoResize
               style={{ minHeight: "50px" }}
