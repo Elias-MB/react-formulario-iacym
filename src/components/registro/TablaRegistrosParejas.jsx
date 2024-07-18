@@ -527,19 +527,26 @@ export function TablaRegistrosParejas({
             field="id"
             header="id"
             sortable
-            style={{ minWidth: "10rem" }}
+            style={{ minWidth: "5rem" }}
           ></Column>
           <Column
             // field="persona.nombre_completo"
             header="Pareja"
             body={nombreCompletoTemplate}
             sortable
-            style={{ minWidth: "55rem" }}
+            style={{ minWidth: "20rem" }}
+          ></Column>
+          <Column
+            field="desc"
+            header="Expectativas"
+            // body={nombreCompletoTemplate}
+            sortable
+            style={{ minWidth: "35rem" }}
           ></Column>
           <Column
             header="Opciones"
             body={actionBodyTemplate}
-            style={{ minWidth: "15rem" }}
+            style={{ minWidth: "10rem" }}
           ></Column>
         </DataTable>
       </div>
