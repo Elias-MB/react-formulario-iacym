@@ -240,6 +240,8 @@ export const RegistrarParejas = () => {
                     showIcon
                     dateFormat="dd/mm/yy"
                     maxDate={fecha_maxima_nacimiento}
+                    mask="05/05/2005"
+                    placeholder="05/05/2005"
                   />
                 </div>
               </div>
@@ -301,6 +303,8 @@ export const RegistrarParejas = () => {
                     showIcon
                     dateFormat="dd/mm/yy"
                     maxDate={fecha_maxima_nacimiento}
+                    mask="05/05/2005"
+                    placeholder="05/05/2005"
                   />
                 </div>
               </div>
